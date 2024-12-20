@@ -6,6 +6,26 @@ import Confetti from "react-confetti";
 import { cardImages } from "./data/data.json";
 import "./App.css";
 import SingleCard from "./components/SingleCard";
+import LAUGH from './sounds/laugh.mp3';
+import WON from './sounds/won.mp3';
+
+const SOUND_EFFECTS = {
+  match: 'https://cdn.freesound.org/previews/240/240777_4107740-lq.mp3',
+  flip: "https://assets.mixkit.co/active_storage/sfx/1434/1434-preview.mp3",
+  laugh: LAUGH,
+  won: WON,
+};
+
+// Audio utility function
+const playSound = (soundEffect) => {
+  const audio = new Audio(soundEffect);
+  audio.volume = 0.6; // Reduce volume to 60%
+  
+  // Only play if the audio can be played (handles browser autoplay policies)
+  audio.play().catch(error => {
+    console.log("Audio playback prevented:", error);
+  });
+};
 
 const App = () => {
   const [gameStarted, setGameStarted] = useState(false);
@@ -16,9 +36,10 @@ const App = () => {
   const [choiceOne, setChoiceOne] = useState(null);
   const [choiceTwo, setChoiceTwo] = useState(null);
 
-  const showConfetti = useMemo(() => score === 6 && cards.every((card) => card.matched) , [score, cards]);
+  const showConfetti = useMemo(() => score === (cards.length/2) && cards.every((card) => card.matched) , [score, cards]);
 
   const shuffleCards = () => {
+    playSound(SOUND_EFFECTS.laugh);
     const shuffledCards = [...cardImages, ...cardImages]
       .sort(() => Math.random() - 0.5)
       .map((card) => ({ ...card, id: Math.random(), matched: false }));
@@ -41,6 +62,7 @@ const App = () => {
             }
           });
         });
+        playSound(SOUND_EFFECTS.match);
         resetTurn();
         setScore((prevScore) => prevScore + 1);
       } else {
@@ -49,8 +71,16 @@ const App = () => {
     }
   }, [choiceOne, choiceTwo]);
 
+  useEffect(() => {
+    if(!showConfetti)return;
+    setTimeout(() =>     
+      playSound(SOUND_EFFECTS.won)
+    , 100);
+  }, [showConfetti]);
+
   // handle a choice
   const handleChoice = (card) => {
+    playSound(SOUND_EFFECTS.flip);
     choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
   };
 

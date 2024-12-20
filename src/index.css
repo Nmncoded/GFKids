@@ -12,6 +12,7 @@ body {
 
 .landing-screen {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   column-gap: 40px;
