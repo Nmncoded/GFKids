@@ -35,3 +35,8 @@ button:hover {
   font-weight: bold;
   margin-right: 10px;
 }
+
+.won {
+  color: #00ff1d;
+  text-decoration: underline;
+}
