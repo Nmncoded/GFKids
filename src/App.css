@@ -23,3 +23,15 @@ button:hover {
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-gap: 20px;
 }
+
+.score-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 10px;
+}
+
+.score-container div span {
+  font-weight: bold;
+  margin-right: 10px;
+}

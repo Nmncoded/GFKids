@@ -13,13 +13,14 @@ const App = () => {
   const [cards, setCards] = useState([]);
   const [turns, setTurns] = useState(0);
   const [confetti, setConfetti] = useState(false);
-  const [choiceOne, setChoiceOne] = useState(null); 
-  const [choiceTwo, setChoiceTwo] = useState(null); 
+  const [disabled, setDisabled] = useState(false);
+  const [choiceOne, setChoiceOne] = useState(null);
+  const [choiceTwo, setChoiceTwo] = useState(null);
 
   const shuffleCards = () => {
     const shuffledCards = [...cardImages, ...cardImages]
       .sort(() => Math.random() - 0.5)
-      .map((card) => ({ ...card, id: Math.random(),matched: false }));
+      .map((card) => ({ ...card, id: Math.random(), matched: false }));
     setCards(shuffledCards);
     setTurns(0);
     // setConfetti(false);
@@ -30,16 +31,22 @@ const App = () => {
   // compare both selected cards
   useEffect(() => {
     if (choiceOne && choiceTwo) {
-      setCards((prevCards) => {
-        return prevCards.map((card) => {
-          if (card.id === choiceOne.id || card.id === choiceTwo.id) {
-            return { ...card, matched: true };
-          } else {
-            return card;
-          }
+      setDisabled(true);
+      if (choiceOne.src === choiceTwo.src) {
+        setCards((prevCards) => {
+          return prevCards.map((card) => {
+            if (card.id === choiceOne.id || card.id === choiceTwo.id) {
+              return { ...card, matched: true };
+            } else {
+              return card;
+            }
+          });
         });
-      });
-      resetTurn();
+        resetTurn();
+        setScore((prevScore) => prevScore + 1);
+      } else {
+        setTimeout(() => resetTurn(), 1000);
+      }
     }
   }, [choiceOne, choiceTwo]);
 
@@ -52,6 +59,7 @@ const App = () => {
     setChoiceOne(null);
     setChoiceTwo(null);
     setTurns((prevTurns) => prevTurns + 1);
+    setDisabled(false);
   };
 
   if (!gameStarted) {
@@ -69,18 +77,26 @@ const App = () => {
     );
   }
 
-  console.log(cards);
+  // console.log(cards);
 
   return (
     <div className="App">
       <h1>Memory Game</h1>
-      <button onClick={() => setGameStarted(false)}>Reset</button>
+      <div className="score-container" >
+        <div>
+          <span>Score: {score}</span>
+          <span>Turns: {turns}</span>
+        </div>
+        <button onClick={() => setGameStarted(false)}>Reset</button>
+      </div>
       <div className="card-grid">
         {cards.map((card) => (
           <SingleCard
             key={card.id}
             card={card}
             handleChoice={handleChoice}
+            flipped={card === choiceOne || card === choiceTwo || card.matched}
+            disabled={disabled}
           />
         ))}
       </div>

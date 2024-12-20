@@ -4,9 +4,10 @@ import React from 'react'
 import { motion } from "framer-motion";
 import './SingleCard.css';
 
-const SingleCard = ({card, handleChoice}) => {
+const SingleCard = ({card, handleChoice, flipped, disabled }) => {
 
   const handleClick = () => {
+    if(disabled) return;
     handleChoice(card);
   }
 
@@ -17,7 +18,7 @@ const SingleCard = ({card, handleChoice}) => {
     whileHover={{ scale: 1.1 }}
     whileTap={{ scale: 0.9 }}
   >
-    <div>
+    <div className={ flipped ?  'flipped': ''} >
       <img className="front" src={card.src} alt="card front" />
       <img className="back" src="/img/cover.png" onClick={handleClick} alt="card back" />
     </div>
