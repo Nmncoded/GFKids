@@ -40,3 +40,83 @@ button:hover {
   color: #00ff1d;
   text-decoration: underline;
 }
+
+.section {
+  width: 100%;
+  min-height: 60vh;
+  margin: 1rem;
+  padding: 1rem 1.5 rem;
+  /* border: 1px solid #fff; */
+}
+
+.section .container {
+  width: 100%;
+  min-height: inherit;
+  display: flex;
+  /* align-items: center; */
+  justify-content: center;
+}
+
+.section .column {
+  width: 100%;
+  border: 1px solid rgba(255,255,255,0.3);
+  min-height: 250px;
+  padding: 1rem 1.2rem;
+  border-radius: 8px;
+  margin: 0 0.5rem;
+}
+
+.section .column:first-child {
+  margin-left: 0;
+}
+
+.section .column:last-child {
+  margin-right: 0;
+}
+
+.column h1 {
+  margin: 0;
+  padding: 0;
+  font-size: 1.2em;
+  font-weight: 400;
+  text-align: start;
+  margin-bottom: 1.4rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px  solid rgba(255,255,255,0.3);
+}
+
+.column p {
+  margin: 0;
+  padding: 0;
+  font-size: 1em;
+  font-weight: 100;
+  text-align: start;
+}
+
+.column .task-list {
+  width: 100%;
+}
+
+.column .task-list .task-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0.4rem 0.85rem;
+  border: 1px solid rgba(255,255,255,0.13);
+  margin-bottom: 1rem;
+  background: #1b1523;
+  border-radius: 6px;
+  cursor: pointer;
+  
+}
+
+.column .task-list .task-item .handle {
+  cursor: pointer;
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+  background-color: aqua;
+  border-radius: 4px;
+  margin-right: .6rem;
+}
+
