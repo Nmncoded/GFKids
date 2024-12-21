@@ -1,11 +1,13 @@
 import LAUGH from '../sounds/laugh.mp3';
 import WON from '../sounds/won.mp3';
+import WRONG from '../sounds/wrong.mp3';
 
 export const SOUND_EFFECTS = {
   match: 'https://cdn.freesound.org/previews/240/240777_4107740-lq.mp3',
   flip: "https://assets.mixkit.co/active_storage/sfx/1434/1434-preview.mp3",
   laugh: LAUGH,
   won: WON,
+  wrong: WRONG,
 };
 
 // Audio utility function
